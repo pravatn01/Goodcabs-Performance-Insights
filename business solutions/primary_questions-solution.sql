@@ -109,13 +109,25 @@ SELECT
     ar.avg_passenger_rating,
     ar.avg_driver_rating,
     CASE
-        WHEN ar.avg_passenger_rating = MAX(ar.avg_passenger_rating) OVER (PARTITION BY ar.passenger_type) THEN 'Highest Passenger Rating'
-        WHEN ar.avg_passenger_rating = MIN(ar.avg_passenger_rating) OVER (PARTITION BY ar.passenger_type) THEN 'Lowest Passenger Rating'
+        WHEN ar.avg_passenger_rating = MAX(ar.avg_passenger_rating) OVER (
+            PARTITION BY
+                ar.passenger_type
+        ) THEN 'Highest Passenger Rating'
+        WHEN ar.avg_passenger_rating = MIN(ar.avg_passenger_rating) OVER (
+            PARTITION BY
+                ar.passenger_type
+        ) THEN 'Lowest Passenger Rating'
         ELSE '-'
     END AS passenger_rating_category,
     CASE
-        WHEN ar.avg_driver_rating = MAX(ar.avg_driver_rating) OVER (PARTITION BY ar.passenger_type) THEN 'Highest Driver Rating'
-        WHEN ar.avg_driver_rating = MIN(ar.avg_driver_rating) OVER (PARTITION BY ar.passenger_type) THEN 'Lowest Driver Rating'
+        WHEN ar.avg_driver_rating = MAX(ar.avg_driver_rating) OVER (
+            PARTITION BY
+                ar.passenger_type
+        ) THEN 'Highest Driver Rating'
+        WHEN ar.avg_driver_rating = MIN(ar.avg_driver_rating) OVER (
+            PARTITION BY
+                ar.passenger_type
+        ) THEN 'Lowest Driver Rating'
         ELSE '-'
     END AS driver_rating_category
 FROM
@@ -123,7 +135,6 @@ FROM
 ORDER BY
     ar.city_name,
     ar.passenger_type;
-
 
 -- 4. Peak and Low Demand Months by City
 WITH
